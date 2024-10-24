@@ -159,6 +159,7 @@ export default function Home() {
 
 function ChevronLeftIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
@@ -179,6 +180,7 @@ function ChevronLeftIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement
 
 function ChevronRightIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
