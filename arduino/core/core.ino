@@ -6,7 +6,7 @@
 
 #define CAMERA HERO4
 
-const char *ssid = "";
+const char *ssid = "JOAO__.2.4 G";
 const char *password = "";
 
 const char *GOPRO_SSID = "bmwixespm";

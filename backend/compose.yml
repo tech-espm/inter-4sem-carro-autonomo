@@ -15,12 +15,9 @@ services:
 
   db:
     image: postgres:latest
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=aiac_db
-
-volumes:
-  postgres_data:
+    ports:
+      - 5432:5432
