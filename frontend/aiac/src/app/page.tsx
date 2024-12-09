@@ -5,31 +5,35 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { use, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import ReactPlayer from 'react-player'
 import { Switch } from "@/components/ui/switch";
 import Spline from "@splinetool/react-spline";
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
+import Hls from 'hls.js';
 
 export default function Home() {
-  const component = useRef<any>();
+  const component = useRef<{ page?: string } | null>(null);
+  const [isLoaded, setIsLoaded] = useState<Boolean>(false);
   const temperature = 100;
 
   function onLoad(spline: any) {
-    const obj = spline.findObjectById('814477c4-88ce-42d7-ab6a-425210cfbfb9');
-
+    const obj = spline.findObjectByName('Cube 7');
     component.current = obj;
+    setIsLoaded(true);
   }
 
+  const videoRef = useRef(null);
 
   useEffect(() => {
-    console.log(component.current);
-
-    if (temperature > 30) {
-      if (component.current) {
-        component.current.page = "Scene 2";
-      }
+    const videoElement = videoRef.current;
+    if (videoElement && Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource("http://10.5.5.9/live/amba.m3u8");
+      hls.attachMedia(videoElement);
     }
-  });
+  }, []);
 
   return (
     <main className=" bg-white">
@@ -99,7 +103,11 @@ export default function Home() {
               <CardTitle>Camera 1</CardTitle>
             </CardHeader>
             <CardContent>
-              <ReactPlayer src="https://www.youtube.com/watch?v=ysz5S6PUM-U" />
+              <video
+                ref={videoRef}
+                controls
+                className="video-js vjs-default-skin vjs-big-play-centered"
+              />
             </CardContent>
           </Card>
           <Card className="bg-background p-6 shadow-lg">
@@ -109,9 +117,8 @@ export default function Home() {
             <CardContent className="">
               <div className="h-[35rem]">
                 <Spline
-                  scene="https://draft.spline.design/vwAEu9to6ypVUq6q/scene.splinecode"
-                  onLoad={onLoad}
-                />
+                  scene="https://prod.spline.design/rysOIUrUqgTKz-TC/scene.splinecode"
+                  onLoad={onLoad} />
               </div>
 
             </CardContent>
